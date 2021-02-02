@@ -2,15 +2,26 @@ import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-export default function AddBookForm({ addBook }) {
-    const [name, setName] = useState("");
-    const [price, setPrice] = useState("");
-    const [category, setCategory] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
-
+export default function EditBookForm({ onSave, book }) {
+    let bName = "";
+    let bPrice = "";
+    let bCat = "";
+    let bImageUrl = "";
+    if (book) {
+        bName = book.name;
+        bPrice = book.price;
+        bCat = book.category;
+        bImageUrl = book.imageUrl;
+    }
+    
+    const [name, setName] = useState(bName);
+    const [price, setPrice] = useState(bPrice);
+    const [category, setCategory] = useState(bCat);
+    const [imageUrl, setImageUrl] = useState(bImageUrl);
+    
     const handleSubmit = (e) => {
         e.preventDefault();
-        addBook({
+        onSave({
             name,
             price,
             category,
@@ -22,11 +33,11 @@ export default function AddBookForm({ addBook }) {
         <div>
             <form
                 autoComplete="off"
+                style={styles.formContainer}
             >
                 <TextField
                     id="name"
                     label="Name"
-                    style={{ margin: 8 }}
                     placeholder="Book Name"
                     fullWidth
                     margin="normal"
@@ -41,7 +52,6 @@ export default function AddBookForm({ addBook }) {
                 <TextField
                     id="price"
                     label="Price"
-                    style={{ margin: 8 }}
                     placeholder="Book Price"
                     fullWidth
                     margin="normal"
@@ -56,7 +66,6 @@ export default function AddBookForm({ addBook }) {
                 <TextField
                     id="category"
                     label="Category"
-                    style={{ margin: 8 }}
                     placeholder="Book Category"
                     fullWidth
                     margin="normal"
@@ -71,7 +80,6 @@ export default function AddBookForm({ addBook }) {
                 <TextField
                     id="image"
                     label="Image Url"
-                    style={{ margin: 8 }}
                     placeholder="Default Url"
                     fullWidth
                     margin="normal"
@@ -83,10 +91,20 @@ export default function AddBookForm({ addBook }) {
                     }}
                     value={imageUrl}
                 />
-                <Button onClick={handleSubmit}>
+                <Button 
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}>
                     Save
                 </Button>
             </form>
         </div>
     );
+};
+
+const styles = {
+    formContainer: {
+        padding: 20,
+        justifyContent: 'center'
+    }
 };

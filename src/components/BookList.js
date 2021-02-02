@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import SingleBook from './SingleBook';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import AddBookForm from './AddBookForm';
+import EditBookForm from './EditBookForm';
 import Dialog from '@material-ui/core/Dialog';
 
 export default function BookList({ bookList }) {
     const [books, setBooks] = useState(bookList);
     const [open, setOpen] = useState(false);
+    const [editingBookIndex, setEditingBookIndex] = useState(-1);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -17,8 +18,13 @@ export default function BookList({ bookList }) {
         setOpen(false);
     };
 
-    const addBook = (book) => {
-        books.push(book);
+    const onSave = (book) => {
+        if(editingBookIndex < 0) {
+            books.push(book);
+        } else {
+            books[editingBookIndex] = book;
+            setEditingBookIndex(-1);
+        }
         setBooks(books);
         setOpen(false);
     };
@@ -28,6 +34,11 @@ export default function BookList({ bookList }) {
         setBooks([...books]);
     };
 
+    const updateBook = (index) => {
+        setOpen(true);
+        setEditingBookIndex(index);
+    };
+
     return (
         <div style={styles.container}>
             <Button
@@ -35,15 +46,17 @@ export default function BookList({ bookList }) {
                 color="primary"
                 endIcon={<AddIcon />}
                 onClick={handleClickOpen}
+                style={styles.addButtonStyle}
             >
                 Add
             </Button>
             <div style={styles.list}>
-                {books.map((book, i) => {
+                {books.length > 0 && books.map((book, i) => {
                     return (
                         <SingleBook
                             key={i}
                             removeBook={removeBook}
+                            updateBook={updateBook}
                             index={i}
                             name={book.name}
                             price={book.price}
@@ -54,9 +67,8 @@ export default function BookList({ bookList }) {
                 }
                 )}
             </div>
-
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <AddBookForm addBook={addBook} />
+                <EditBookForm book={books[editingBookIndex]} onSave={onSave} />
             </Dialog>
         </div>
     );
@@ -69,7 +81,12 @@ const styles = {
     },
 
     list: {
-        display: 'flex',
-        flexDirection: 'row',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+    },
+
+    addButtonStyle: {
+        marginLeft: 10
     }
+
 };

@@ -4,9 +4,13 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import EditBookForm from './EditBookForm';
 import Dialog from '@material-ui/core/Dialog';
+import { useSelector, useDispatch } from 'react-redux';
+import { addBook, updateBook } from '../actions/books';
 
-export default function BookList({ bookList }) {
-    const [books, setBooks] = useState(bookList);
+export default function BookList() {
+    const books = useSelector(state => state.books);
+    const dispatch = useDispatch()
+
     const [open, setOpen] = useState(false);
     const [editingBookIndex, setEditingBookIndex] = useState(-1);
 
@@ -20,21 +24,15 @@ export default function BookList({ bookList }) {
 
     const onSave = (book) => {
         if(editingBookIndex < 0) {
-            books.push(book);
+            dispatch(addBook(book));
         } else {
-            books[editingBookIndex] = book;
+            dispatch(updateBook(book, editingBookIndex));
             setEditingBookIndex(-1);
         }
-        setBooks(books);
         setOpen(false);
     };
 
-    const removeBook = (index) => {
-        books.splice(index, 1);
-        setBooks([...books]);
-    };
-
-    const updateBook = (index) => {
+    const startUpdatingBook = (index) => {
         setOpen(true);
         setEditingBookIndex(index);
     };
@@ -55,8 +53,7 @@ export default function BookList({ bookList }) {
                     return (
                         <SingleBook
                             key={i}
-                            removeBook={removeBook}
-                            updateBook={updateBook}
+                            onUpdateClicked={startUpdatingBook}
                             index={i}
                             name={book.name}
                             price={book.price}
@@ -77,12 +74,12 @@ export default function BookList({ bookList }) {
 const styles = {
     container: {
         margin: 40,
-        padding: 10,
+        padding: 10
     },
 
     list: {
         display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
+        gridTemplateColumns: 'repeat(3, 1fr)'
     },
 
     addButtonStyle: {

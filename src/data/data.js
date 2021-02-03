@@ -1,29 +1,25 @@
 export const data = [
-    {   id: "1",
-        name: "1The-Neapolitan-Novels",
+    {   name: "The Neapolitan Novels",
         price: "66.9",
         category: "Novel",
         imageUrl: '/images/The-Neapolitan-Novels.jpg'
     },
     {
-        id: "2",
-        name: "2The-Neapolitan-Novels",
+        name: "Sophie's World",
         price: "66.9",
         category: "Novel",
-        imageUrl: '/images/The-Neapolitan-Novels.jpg'
+        imageUrl: '/images/SophiesWorld.jpeg'
     },
     {
-        id: "3",
-        name: "3The-Neapolitan-Novels",
+        name: "Anatomy for Artists",
         price: "66.9",
-        category: "Novel",
-        imageUrl: '/images/The-Neapolitan-Novels.jpg'
+        category: "Art",
+        imageUrl: '/images/AnatomyforArtists.jpg'
     },
     {
-        id: "4",
-        name: "4The-Neapolitan-Novels",
-        price: "66.9",
+        name: "Mastering the Essentials of Craftsmanship",
+        price: "22.9",
         category: "Novel",
-        imageUrl: '/images/The-Neapolitan-Novels.jpg'
+        imageUrl: '/images/no-image.png'
     }
 ]

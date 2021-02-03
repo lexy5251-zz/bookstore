@@ -32,7 +32,6 @@ export default function EditBookForm({ onSave, book }) {
     return (
         <div>
             <form
-                autoComplete="off"
                 style={styles.formContainer}
             >
                 <TextField
@@ -52,7 +51,7 @@ export default function EditBookForm({ onSave, book }) {
                 <TextField
                     id="price"
                     label="Price"
-                    placeholder="Book Price"
+                    placeholder="$"
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -80,7 +79,7 @@ export default function EditBookForm({ onSave, book }) {
                 <TextField
                     id="image"
                     label="Image Url"
-                    placeholder="Default Url"
+                    placeholder="/images/no-image.png"
                     fullWidth
                     margin="normal"
                     InputLabelProps={{

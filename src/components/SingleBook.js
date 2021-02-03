@@ -1,8 +1,12 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
+import { useDispatch } from 'react-redux';
+import { removeBook } from '../actions/books';
 
-export default function SingleBook({ name, price, category, imageUrl, removeBook, index, updateBook }) {
+export default function SingleBook({ name, price, category, imageUrl, index, onUpdateClicked }) {
+  const dispatch = useDispatch()
+
   return (
     <Card style={styles.container}>
       <div>
@@ -10,15 +14,17 @@ export default function SingleBook({ name, price, category, imageUrl, removeBook
           style={styles.media}
           src={imageUrl}
         />
-        <div style={styles.content}>Name: <strong>{name}</strong></div>
-        <div style={styles.content}>Price: ${price}</div>
-        <div style={styles.content}>Category: {category}</div>
+      </div>
+      <div>
+        <div style={styles.content}><strong>{name}</strong></div>
+        <div style={styles.content}>${price}</div>
+        <div style={styles.content}>{category}</div>
         <div style={styles.buttonsContainer}>
           <Button
             size="small"
             variant="outlined"
             color="primary"
-            onClick={() => updateBook(index)}
+            onClick={() => onUpdateClicked(index)}
           >
             Update
           </Button>
@@ -26,7 +32,7 @@ export default function SingleBook({ name, price, category, imageUrl, removeBook
             size="small"
             variant="outlined"
             color="secondary"
-            onClick={() => removeBook(index)}
+            onClick={() => dispatch(removeBook(index))}
           >
             Delete
             </Button>
@@ -38,8 +44,12 @@ export default function SingleBook({ name, price, category, imageUrl, removeBook
 
 const styles = {
   container: {
+    minHeight: 400,
     margin: 10,
     padding: 10,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
 
   media: {

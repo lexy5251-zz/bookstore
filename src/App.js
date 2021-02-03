@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import BookList from './components/BookList';
 import { data } from './data/data.js';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { booksReducer } from './reducers/books';
 
 function App() {
-  const [bookList, setBookList] = useState(data);
+  const store = createStore(booksReducer, {books: data});
 
   return (
-    <div>
-      <BookList bookList={bookList}/>
-    </div>
+    <Provider store={store}>
+        <BookList/>
+    </Provider>
   );
 }
 
